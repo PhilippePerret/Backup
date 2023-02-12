@@ -1,13 +1,17 @@
 module Backup
 
   def self.watch_a_file(args)
+    path = nil
+    if args && args.key?(:path)
+      path = args[:path]
+    end
     clear
     puts "Surveillance d'un fichier/dossier…".bleu
     #
     # S'il existe un fichier CURRENT_WATCHED, il faut demander si 
     # c'est ce fichier/dossier qui doit être surveillé
     # 
-    if current?
+    if path.nil? && current?
       if Q.yes?("Est-ce le fichier #{watched_relpath} qu'il faut suivre ?".jaune)
         path = watched_path
       end
@@ -20,8 +24,8 @@ module Backup
     path = find_path_with_path(path)
     unless path.nil?
       if File.exist?(path)
-        watch_path(path)
         memo_watched_path(path)
+        watch_path(path)
       else
         puts "Le chemin #{path.inspect} est introuvable.".rouge
       end
