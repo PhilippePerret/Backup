@@ -1,3 +1,6 @@
+* Un mode d'utilisation quand c'est un document sur cloud :
+  Backup demande s'il faut faire une copie sur le disque pour la 
+  travailler. En fin de session, le travail est remis en place.
 * Une notitifcation quand une erreur se produit au backup
 * option `-h` pour obtenir de l'aide OK
   - comment lancer sans rien (=> menu pour savoir quoi faire)

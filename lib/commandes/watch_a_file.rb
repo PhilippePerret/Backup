@@ -35,6 +35,7 @@ module Backup
 
   def self.watch_path(path)
     begin
+      puts "(taper Control-z ou Control-c pour finir la surveillance)".gris
       `fswatch -ox "#{path}" | xargs -n1 -I{} ~/Programmes/Backup/on_change.rb`
     rescue Exception => e
       puts e.inspect
