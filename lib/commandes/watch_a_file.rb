@@ -20,11 +20,11 @@ module Backup
       puts "OK, je m'arrête là…".bleu
       return
     end
-    puts "OK, je suis cet élément…".bleu
     path = find_path_with_path(path)
     unless path.nil?
       if File.exist?(path)
         memo_watched_path(path)
+        puts "OK, je surveille l'élément `(…)/#{watched_relpath}'…".bleu
         watch_path(path)
       else
         puts "Le chemin #{path.inspect} est introuvable.".rouge
