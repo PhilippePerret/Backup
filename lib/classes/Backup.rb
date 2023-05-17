@@ -41,7 +41,7 @@ module Backup
   end
 
   def self.memo_watched_path(path)
-    File.open(memo_path, 'wb'){|f| f.write path}
+    # File.open(memo_path, 'wb'){|f| f.write path} # NON, ON NE MÉMORISE PLUS, ÇA POSE TROP DE PROBLÈMES
   end
 
   # @return true s'il y a un fichier courant
