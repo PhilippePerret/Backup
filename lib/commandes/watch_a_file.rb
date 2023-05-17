@@ -21,6 +21,10 @@ module Backup
       return
     end
     path = find_path_with_path(path)
+    # Correction "à la main" du tilde
+    if path.match?(/ã/) && !File.exist?(path)
+      path = path.gsub(/ã/, '~a')
+    end
     unless path.nil?
       if File.exist?(path)
         memo_watched_path(path)

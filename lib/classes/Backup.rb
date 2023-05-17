@@ -10,6 +10,8 @@ module Backup
       require_and_run('display_help')
     elsif ARGV[0]
       path = find_path_with_path(ARGV[0]) || return
+      puts "path = #{path.inspect}"
+      sleep 4
       watch_file(path)
     else
       choix = choisir_operation || return
@@ -41,7 +43,7 @@ module Backup
   end
 
   def self.memo_watched_path(path)
-    # File.open(memo_path, 'wb'){|f| f.write path} # NON, ON NE MÉMORISE PLUS, ÇA POSE TROP DE PROBLÈMES
+    File.open(memo_path, 'wb'){|f| f.write path}
   end
 
   # @return true s'il y a un fichier courant
@@ -50,29 +52,28 @@ module Backup
   #   fichier n'est pas détruit.
   # 
   def self.current?
-    File.exist?(memo_path) && File.exist?(watched_path)
+    File.exist?(memo_path) && watched_path && File.exist?(watched_path)
   end
 
   def self.watched_path
-    File.read(memo_path).strip
+    File.read(memo_path).strip if File.exist?(memo_path)
   end
 
   # @return [String] Chemin relatif utilisé pour les backups
   # pour éviter les collisions
-  def self.watched_compactpath
-    watched_relpath.gsub(/\//,'_').gsub(/[ \-]/,'_')
-  end
+  # def self.watched_compactpath
+  #   watched_relpath && watched_relpath.gsub(/\//,'_').gsub(/[ \-]/,'_')
+  # end
 
   # @return [String] Chemin relatif (juste pour indication)
   def self.watched_relpath
-    relpath = watched_path.split("/")[-3..-1].join("/")
+    relpath = watched_path.split("/")[-3..-1].join("/") if watched_path
   end
 
   def self.find_path_with_path(path)
     return File.expand_path(path) if File.exist?(path)
     cfolder = File.expand_path('.')
     Dir["#{cfolder}/*.*"].each do |pth|
-      puts "Path testé contre #{path.inspect} : #{File.basename(pth).inspect}"
       if File.basename(pth).match?(/#{path}/i)
         return pth
       end
