@@ -28,7 +28,8 @@ module Backup
     unless path.nil?
       if File.exist?(path)
         memo_watched_path(path)
-        puts "OK, je surveille l'élément `(…)/#{watched_relpath}'…".bleu
+        puts "OK, je surveille l'élément ci-dessous…".bleu
+        puts "(#{path})"
         watch_path(path)
       else
         puts "Le chemin #{path.inspect} est introuvable.".rouge
