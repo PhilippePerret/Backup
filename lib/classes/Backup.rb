@@ -61,9 +61,9 @@ module Backup
 
   # @return [String] Chemin relatif utilisé pour les backups
   # pour éviter les collisions
-  # def self.watched_compactpath
-  #   watched_relpath && watched_relpath.gsub(/\//,'_').gsub(/[ \-]/,'_')
-  # end
+  def self.watched_compactpath
+   watched_relpath && watched_relpath.gsub(/\//,'_').gsub(/[ \-]/,'_')
+  end
 
   # @return [String] Chemin relatif (juste pour indication)
   def self.watched_relpath
